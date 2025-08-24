@@ -1,82 +1,51 @@
 <!doctype html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ARQUIVO: O Paradoxo dos Arquitetos</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Theo e o Labirinto das Escolhas — Interativo</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <canvas id="stars" aria-hidden="true"></canvas>
+  <main class="app">
+    <header>
+      <h1>Theo e o Labirinto das Escolhas</h1>
+      <p class="subtitle">Um jogo interativo inspirado em Bandersnatch — ciência, caos e escolhas para crianças (e curiosos).</p>
+    </header>
 
-  <header class="site-header">
-    <h1>O Paradoxo dos Arquitetos</h1>
-    <p class="subtitle">Uma história interativa científico‑caótica com decisões tipo Black Mirror</p>
-  </header>
-
-  <main class="wrap">
-    <section id="intro" class="card">
-      <p id="introText" class="type"></p>
-      <p class="legend">
-        Você é <span class="strong">Elisa A. Varela</span>, cientista de sistemas complexos no consórcio <em>Atlas/67</em>, 2049.  
-        O sistema <span class="pill">ARQUIVO</span> reconstrói a história humana a partir de decisões mínimas — e permite <em>intervenções</em>.
-      </p>
+    <section id="panel" class="card">
+      <div id="sceneTitle" class="scene-title"></div>
+      <div id="sceneText" class="scene-text"></div>
     </section>
 
-    <section id="panels" class="panels">
-      <article class="panel">
-        <h4>Passado</h4><div class="tag">causas</div>
-        <div id="past" class="content"></div>
-      </article>
-      <article class="panel">
-        <h4>Presente</h4><div class="tag">estado</div>
-        <div id="present" class="content"></div>
-      </article>
-      <article class="panel">
-        <h4>Futuro</h4><div class="tag">projeções</div>
-        <div id="future" class="content"></div>
-      </article>
+    <nav id="choices" class="choices card"></nav>
+
+    <section id="explain" class="explain card">
+      <h3>Explicação Científica (simples)</h3>
+      <div id="explainBody"></div>
     </section>
 
-    <section class="choices" id="choiceGrid"></section>
-
-    <section class="hud">
-      <div class="module">
-        <div class="row space">
-          <div>
-            <label>Caos (ε)</label>
-            <input id="epsilon" type="range" min="0.00001" max="0.02" step="0.00001" value="0.00050" />
-            <span id="epsVal" class="pill">ε = 0.00050</span>
-          </div>
-          <div>
-            <label>Mapa logístico r</label>
-            <input id="rval" type="range" min="3.4" max="4.0" step="0.01" value="3.90" />
-            <span id="rVal" class="pill">r = 3.90</span>
-          </div>
-          <div class="pill" id="worldTag">universo: α0</div>
-        </div>
-        <canvas id="chaos" height="220"></canvas>
-        <p class="legend">Duas trajetórias com condições iniciais que diferem por ε sob <code>xₙ₊₁=r·xₙ(1−xₙ)</code>. A divergência ~ e<sup>λt</sup> (λ ≈ expoente de Lyapunov).</p>
+    <section class="card small" id="controls">
+      <div id="stats">—</div>
+      <div id="progress">Escolhas: 0</div>
+      <div class="controls-row">
+        <button id="backBtn" class="muted">↶ Voltar</button>
+        <button id="saveBtn" class="muted">💾 Salvar</button>
+        <button id="loadBtn" class="muted">📂 Carregar</button>
+        <button id="exportBtn" class="muted">⤓ Exportar</button>
+        <button id="importBtn" class="muted">⤒ Importar</button>
+        <button id="restartBtn" class="danger">Recomeçar</button>
       </div>
-      <div class="module">
-        <div class="row space">
-          <strong>Console do ARQUIVO</strong>
-          <span class="pill">logging</span>
-        </div>
-        <pre id="log" class="console" aria-live="polite"></pre>
-      </div>
+      <div id="map" class="map"></div>
     </section>
 
-    <div class="controls">
-      <button id="backBtn" class="secondary" disabled>⟵ Voltar</button>
-      <button id="resetBtn" class="secondary">Resetar</button>
-      <button id="exportBtn">Exportar Sessão (.json)</button>
-    </div>
+    <footer class="card small muted">
+      Dicas automáticas de evolução sempre que pedir — use variáveis, finais secretos e eventos raros para tornar o jogo mais caótico e surpreendente.
+    </footer>
   </main>
 
-  <div class="scanline" aria-hidden="true"></div>
-  <script src="app.js"></script>
+  <input type="file" id="importFile" style="display:none" accept="application/json"/>
+
+  <script src="script.js"></script>
 </body>
 </html>
