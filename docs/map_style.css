@@ -1,0 +1,23 @@
+/* map_style.css atualizado e responsivo com legenda */
+body{margin:0;font-family:Inter,sans-serif;background:#071225;color:#e6eef6}
+.app{max-width:1200px;margin:20px auto;padding:10px}
+header{text-align:center}
+.subtitle{color:#9fb0c2}
+.choice-btn{flex:1 1 calc(50% - 12px);min-width:160px;padding:12px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);cursor:pointer;color:white;transition:all 0.3s}
+.choice-btn:hover{transform:translateY(-4px);box-shadow:0 6px 18px rgba(3,6,12,0.5)}
+svg{background:#0f1724;border-radius:12px;box-shadow:0 8px 25px rgba(0,0,0,0.6);width:100%;height:auto;max-height:600px}
+.node{fill:#7dd3fc;stroke:white;stroke-width:1.5px;transition:fill 0.3s, r 0.3s}
+.node-secret{fill:#facc15;stroke:white;stroke-width:2px}
+.node-chaos{fill:#f87171;stroke:white;stroke-width:2px}
+.node-current{stroke:#34d399;stroke-width:3px;animation:pulse 1s infinite alternate}
+@keyframes pulse{0%{r:25}100%{r:30}}
+.node-text{fill:white;font-size:12px;text-anchor:middle}
+.link{stroke:#9fb0c2;stroke-width:2;stroke-opacity:0.6;transition:stroke 0.3s}
+#mapContainer{margin-top:30px}
+#legend{display:flex;justify-content:center;margin-top:15px;gap:20px;color:white;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:5px}
+.legend-color{width:20px;height:20px;border-radius:50%;border:1px solid white}
+@media (max-width:768px){
+  .node-text{font-size:10px}
+  #legend{gap:10px;flex-direction:column;align-items:center}
+}
