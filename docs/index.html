@@ -3,216 +3,109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Docs Científicos Interativos</title>
+<title>Docs Científico Interativo</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<!-- Sidebar -->
-<aside class="sidebar">
-  <h2>Teorias</h2>
-  <input type="text" id="search" placeholder="Buscar tópicos..." />
-  <ul id="topic-list">
-    <!-- Física -->
-    <li data-category="fisica"><a href="#relatividade">Relatividade</a></li>
-    <li data-category="fisica"><a href="#quantica">Mecânica Quântica</a></li>
-    <li data-category="fisica"><a href="#caos">Teoria do Caos</a></li>
-    <li data-category="fisica"><a href="#termodinamica">Termodinâmica</a></li>
-    <li data-category="fisica"><a href="#eletromagnetismo">Eletromagnetismo</a></li>
-    <!-- Biologia -->
-    <li data-category="biologia"><a href="#evolucao">Teoria da Evolução</a></li>
-    <li data-category="biologia"><a href="#genetica">Genética Mendeliana</a></li>
-    <li data-category="biologia"><a href="#biologia-molecular">Biologia Molecular</a></li>
-    <!-- Química -->
-    <li data-category="quimica"><a href="#quimica-organica">Química Orgânica</a></li>
-    <li data-category="quimica"><a href="#termoquimica">Termoquímica</a></li>
-    <li data-category="quimica"><a href="#ligacoes">Ligações Químicas</a></li>
-    <!-- Matemática -->
-    <li data-category="matematica"><a href="#calculo">Cálculo</a></li>
-    <li data-category="matematica"><a href="#estatistica">Estatística</a></li>
-    <li data-category="matematica"><a href="#teoria-numeros">Teoria dos Números</a></li>
-    <!-- Cosmologia -->
-    <li data-category="cosmologia"><a href="#bigbang">Big Bang</a></li>
-    <li data-category="cosmologia"><a href="#materia-escura">Matéria Escura</a></li>
-    <li data-category="cosmologia"><a href="#energia-escura">Energia Escura</a></li>
-  </ul>
+<button id="menu-toggle">Menu</button>
+<div class="sidebar">
+  <h2>Teorias Científicas</h2>
+  <input type="text" id="search" placeholder="Buscar teoria...">
   <div class="filters">
     <button data-filter="all">Todos</button>
-    <button data-filter="fisica">Física</button>
-    <button data-filter="biologia">Biologia</button>
-    <button data-filter="quimica">Química</button>
-    <button data-filter="matematica">Matemática</button>
-    <button data-filter="cosmologia">Cosmologia</button>
+    <button data-filter="relatividade">Relatividade</button>
+    <button data-filter="evolucao">Evolução</button>
+    <button data-filter="quantica">Quântica</button>
   </div>
-  <button id="dark-mode-toggle">Modo Escuro</button>
+  <a href="#relatividade">Relatividade Geral</a>
+  <a href="#evolucao">Teoria da Evolução</a>
+  <a href="#quantica">Mecânica Quântica</a>
+  <button id="dark-mode-toggle">Dark Mode</button>
   <button id="random-topic">Explorar Aleatório</button>
-</aside>
-
-<!-- Conteúdo -->
-<main class="content">
-
-<!-- Física -->
-<section id="relatividade" class="topic" data-category="fisica">
-<h2>Relatividade</h2>
-<div class="accordion-content">
-<p><strong>Princípios:</strong> Tempo e espaço são relativos; velocidade da luz constante; massa e energia equivalentes (E=mc²).</p>
-<p><strong>Impacto Histórico:</strong> Revolucionou a física, explicando fenômenos como precessão do periélio de Mercúrio.</p>
-<p><strong>Aplicações:</strong> GPS, engenharia aeroespacial, cosmologia.</p>
-<p><strong>Curiosidades:</strong> Publicada por Albert Einstein em 1905 (Relatividade Especial) e 1915 (Relatividade Geral).</p>
-<p><strong>Fontes:</strong> <a href="https://www.britannica.com/science/relativity" target="_blank">Britannica – Relatividade</a></p>
 </div>
-<div class="timeline">
-<div class="event" style="left:0%">1905 - Relatividade Especial</div>
-<div class="event" style="left:50%">1915 - Relatividade Geral</div>
-</div>
-</section>
 
-<section id="quantica" class="topic" data-category="fisica">
-<h2>Mecânica Quântica</h2>
-<div class="accordion-content">
-<p>Partículas subatômicas têm comportamento probabilístico; dualidade onda-partícula; princípio da incerteza de Heisenberg.</p>
-<p>Fundamentou física moderna e química, permitindo tecnologias como semicondutores e lasers.</p>
-<p><strong>Fontes:</strong> <a href="https://www.nature.com/subjects/quantum-physics" target="_blank">Nature – Quantum Physics</a></p>
-</div>
-<canvas class="quantum-canvas" width="400" height="100"></canvas>
-</section>
+<div class="content">
+  <div class="topic" data-category="relatividade" id="relatividade">
+    <h2>🌌 Relatividade Geral</h2>
+    <div class="accordion-content">
+      <p>A Relatividade Geral descreve a gravidade como a curvatura do espaço-tempo causada pela presença de massa e energia. Experimentos como o de Eddington (1919) e a detecção de ondas gravitacionais pelo LIGO (2015) confirmam suas previsões.</p>
+      <ul>
+        <li><strong>Artigos e Fontes:</strong> <a href="https://pt.wikipedia.org/wiki/Introdu%C3%A7%C3%A3o_%C3%A0_relatividade_geral" target="_blank">Wikipedia</a>, <a href="https://portal.sbpcnet.org.br/noticias/o-eclipse-observado-no-brasil-que-comprovou-a-teoria-da-relatividade-geral/" target="_blank">SBPC</a></li>
+        <li><strong>Vídeo:</strong> <a href="https://www.youtube.com/watch?v=tjZyNJl0U6M" target="_blank">Física na Veia</a></li>
+      </ul>
+      <canvas class="relatividade-canvas"></canvas>
+      <p>Aplicações modernas: GPS, astrofísica, ondas gravitacionais.</p>
+      <div class="quiz" id="quiz-relatividade">
+        <h3>Quiz: Relatividade Geral</h3>
+        <div class="quiz-question" data-correct="a">
+          <p>Qual conceito central da Relatividade Geral? </p>
+          <ul>
+            <li data-option="a">A gravidade como curvatura do espaço-tempo</li>
+            <li data-option="b">A gravidade como força atrativa direta</li>
+            <li data-option="c">A velocidade da luz não influencia o espaço</li>
+          </ul>
+        </div>
+        <button class="next-btn">Próxima</button>
+        <p class="quiz-feedback"></p>
+      </div>
+    </div>
+  </div>
 
-<section id="caos" class="topic" data-category="fisica">
-<h2>Teoria do Caos</h2>
-<div class="accordion-content">
-<p>Sistemas não-lineares são altamente sensíveis a condições iniciais (“Efeito Borboleta”).</p>
-<p>Aplicações: meteorologia, economia, ecossistemas, engenharia de sistemas complexos.</p>
-<p><strong>Fontes:</strong> <a href="https://www.sciencedirect.com/topics/mathematics/chaos-theory" target="_blank">ScienceDirect – Chaos Theory</a></p>
-</div>
-</section>
+  <div class="topic" data-category="evolucao" id="evolucao">
+    <h2>🧬 Teoria da Evolução</h2>
+    <div class="accordion-content">
+      <p>Proposta por Charles Darwin, a evolução explica a diversidade das espécies por seleção natural, adaptação e mutações. Evidências incluem registro fóssil, homologia anatômica e genética molecular.</p>
+      <ul>
+        <li><strong>Artigos e Fontes:</strong> <a href="https://pt.wikipedia.org/wiki/A_Origem_das_Esp%C3%A9cies" target="_blank">Wikipedia</a>, <a href="https://brasilescola.uol.com.br/biologia/teoria-da-evolucao.htm" target="_blank">Brasil Escola</a></li>
+        <li><strong>Vídeo:</strong> <a href="https://www.youtube.com/watch?v=8kK2zwjRV0M" target="_blank">Canal do Ensino</a></li>
+      </ul>
+      <canvas class="evolucao-canvas"></canvas>
+      <p>Aplicações modernas: medicina evolutiva, conservação ambiental.</p>
+      <div class="quiz" id="quiz-evolucao">
+        <h3>Quiz: Teoria da Evolução</h3>
+        <div class="quiz-question" data-correct="b">
+          <p>Qual é a principal evidência da seleção natural?</p>
+          <ul>
+            <li data-option="a">Diferença de cor de planetas</li>
+            <li data-option="b">Adaptabilidade e sobrevivência de indivíduos com características favoráveis</li>
+            <li data-option="c">Movimento de tectônicas</li>
+          </ul>
+        </div>
+        <button class="next-btn">Próxima</button>
+        <p class="quiz-feedback"></p>
+      </div>
+    </div>
+  </div>
 
-<section id="termodinamica" class="topic" data-category="fisica">
-<h2>Termodinâmica</h2>
-<div class="accordion-content">
-<p>Leis da termodinâmica: conservação de energia, entropia, calor e trabalho.</p>
-<p>Aplicações: engenharia, física, química, biologia.</p>
-<p><strong>Fontes:</strong> <a href="https://www.britannica.com/science/thermodynamics-physics" target="_blank">Britannica – Termodinâmica</a></p>
+  <div class="topic" data-category="quantica" id="quantica">
+    <h2>⚛️ Mecânica Quântica</h2>
+    <div class="accordion-content">
+      <p>A mecânica quântica descreve partículas subatômicas, com conceitos de dualidade onda-partícula e princípio da incerteza de Heisenberg. Experimentos fundamentais incluem dupla fenda e Davisson-Germer.</p>
+      <ul>
+        <li><strong>Artigos e Fontes:</strong> <a href="https://pt.wikipedia.org/wiki/Mec%C3%A2nica_qu%C3%A2ntica" target="_blank">Wikipedia</a>, <a href="https://www.ufmg.br/espacodoconhecimento/o-nascimento-da-fisica-quantica/" target="_blank">UFMG</a></li>
+        <li><strong>Vídeo:</strong> <a href="https://www.youtube.com/watch?v=8kK2zwjRV0M" target="_blank">Canal do Ensino</a></li>
+      </ul>
+      <canvas class="quantica-canvas"></canvas>
+      <p>Aplicações modernas: computação quântica, lasers, semicondutores, medicina.</p>
+      <div class="quiz" id="quiz-quantica">
+        <h3>Quiz: Mecânica Quântica</h3>
+        <div class="quiz-question" data-correct="c">
+          <p>O que representa o princípio da incerteza de Heisenberg?</p>
+          <ul>
+            <li data-option="a">É possível medir tudo com precisão infinita</li>
+            <li data-option="b">As partículas não existem realmente</li>
+            <li data-option="c">Não podemos medir simultaneamente posição e momento com precisão absoluta</li>
+          </ul>
+        </div>
+        <button class="next-btn">Próxima</button>
+        <p class="quiz-feedback"></p>
+      </div>
+    </div>
+  </div>
 </div>
-</section>
-
-<section id="eletromagnetismo" class="topic" data-category="fisica">
-<h2>Eletromagnetismo</h2>
-<div class="accordion-content">
-<p>Campos elétricos e magnéticos, ondas eletromagnéticas, leis de Maxwell.</p>
-<p>Aplicações: eletrônica, telecomunicações, motores elétricos.</p>
-<p><strong>Fontes:</strong> <a href="https://www.britannica.com/science/electromagnetism" target="_blank">Britannica – Eletromagnetismo</a></p>
-</div>
-</section>
-
-<!-- Biologia -->
-<section id="evolucao" class="topic" data-category="biologia">
-<h2>Teoria da Evolução</h2>
-<div class="accordion-content">
-<p>Seleção natural, adaptação de espécies, variação genética.</p>
-<p>Aplicações: biologia, medicina, ecologia, conservação de espécies.</p>
-<p><strong>Fontes:</strong> <a href="https://www.britannica.com/science/evolution-biology" target="_blank">Britannica – Evolução</a></p>
-</div>
-</section>
-
-<section id="genetica" class="topic" data-category="biologia">
-<h2>Genética Mendeliana</h2>
-<div class="accordion-content">
-<p>Leis da herança: dominância, segregação, combinação independente.</p>
-<p>Aplicações: melhoramento genético, biotecnologia, medicina.</p>
-<p><strong>Fontes:</strong> <a href="https://www.britannica.com/science/Mendelian-genetics" target="_blank">Britannica – Genética Mendeliana</a></p>
-</div>
-</section>
-
-<section id="biologia-molecular" class="topic" data-category="biologia">
-<h2>Biologia Molecular</h2>
-<div class="accordion-content">
-<p>DNA, RNA, síntese proteica, código genético.</p>
-<p>Aplicações: engenharia genética, diagnóstico, terapias gênicas.</p>
-<p><strong>Fontes:</strong> <a href="https://www.nature.com/subjects/molecular-biology" target="_blank">Nature – Molecular Biology</a></p>
-</div>
-</section>
-
-<!-- Química -->
-<section id="quimica-organica" class="topic" data-category="quimica">
-<h2>Química Orgânica</h2>
-<div class="accordion-content">
-<p>Hidrocarbonetos, grupos funcionais, reações químicas.</p>
-<p>Aplicações: farmacêutica, polímeros, bioquímica.</p>
-</div>
-</section>
-
-<section id="termoquimica" class="topic" data-category="quimica">
-<h2>Termoquímica</h2>
-<div class="accordion-content">
-<p>Energia de reações, entalpia, calor e trabalho.</p>
-<p>Aplicações: engenharia química, processos industriais.</p>
-</div>
-</section>
-
-<section id="ligacoes" class="topic" data-category="quimica">
-<h2>Ligações Químicas</h2>
-<div class="accordion-content">
-<p>Iônicas, covalentes, metálicas, pontes de hidrogênio.</p>
-<p>Aplicações: materiais, química industrial, biologia molecular.</p>
-</div>
-</section>
-
-<!-- Matemática -->
-<section id="calculo" class="topic" data-category="matematica">
-<h2>Cálculo</h2>
-<div class="accordion-content">
-<p>Derivadas, integrais, limites.</p>
-<p>Aplicações: física, engenharia, economia, estatística.</p>
-</div>
-</section>
-
-<section id="estatistica" class="topic" data-category="matematica">
-<h2>Estatística</h2>
-<div class="accordion-content">
-<p>Probabilidade, médias, variância, distribuições.</p>
-<p>Aplicações: ciência de dados, biologia, economia.</p>
-</div>
-</section>
-
-<section id="teoria-numeros" class="topic" data-category="matematica">
-<h2>Teoria dos Números</h2>
-<div class="accordion-content">
-<p>Números primos, divisibilidade, congruências.</p>
-<p>Aplicações: criptografia, computação, teoria matemática.</p>
-</div>
-</section>
-
-<!-- Cosmologia -->
-<section id="bigbang" class="topic" data-category="cosmologia">
-<h2>Big Bang</h2>
-<div class="accordion-content">
-<p>Origem do universo a partir de um ponto extremamente quente e denso.</p>
-<p>Radiação cósmica de fundo detectada em 1965.</p>
-<p>Aplicações: astronomia, física de partículas, formação galáctica.</p>
-</div>
-<canvas class="universe-canvas" width="400" height="100"></canvas>
-</section>
-
-<section id="materia-escura" class="topic" data-category="cosmologia">
-<h2>Matéria Escura</h2>
-<div class="accordion-content">
-<p>Massa invisível que afeta gravidade em galáxias e aglomerados.</p>
-<p>Aplicações: cosmologia, astrofísica, simulações do universo.</p>
-</div>
-</section>
-
-<section id="energia-escura" class="topic" data-category="cosmologia">
-<h2>Energia Escura</h2>
-<div class="accordion-content">
-<p>Expansão acelerada do universo; representa ~68% da energia total.</p>
-<p>Aplicações: modelos cosmológicos, física teórica.</p>
-</div>
-</section>
-
-</main>
 
 <footer>
-<p>© 2025 Docs Científicos Interativos</p>
+  Docs Científico Interativo &copy; 2025 | Feito para aprendizado completo
 </footer>
 
 <script src="script.js"></script>
