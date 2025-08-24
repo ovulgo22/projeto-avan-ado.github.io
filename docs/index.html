@@ -3,57 +3,136 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Teorias Científicas Revolucionárias</title>
+  <title>Teorias Científicas Interativas - Docs Avançado</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Teorias Científicas que Mudaram a Humanidade</h1>
-    <nav>
-      <ul>
-        <li><a href="#relatividade">Relatividade</a></li>
-        <li><a href="#evolucao">Teoria da Evolução</a></li>
-        <li><a href="#caos">Teoria do Caos</a></li>
-        <li><a href="#quantica">Mecânica Quântica</a></li>
-        <li><a href="#bigbang">Big Bang</a></li>
+  <div class="container">
+    <!-- Sidebar fixa -->
+    <aside class="sidebar">
+      <h2>Teorias</h2>
+      <input type="text" id="search" placeholder="Filtrar tópicos..." />
+      <ul id="topic-list">
+        <!-- Física -->
+        <li data-category="fisica"><a href="#relatividade">Relatividade</a></li>
+        <li data-category="fisica"><a href="#quantica">Mecânica Quântica</a></li>
+        <li data-category="fisica"><a href="#caos">Teoria do Caos</a></li>
+        <li data-category="fisica"><a href="#termodinamica">Termodinâmica</a></li>
+        <!-- Biologia -->
+        <li data-category="biologia"><a href="#evolucao">Teoria da Evolução</a></li>
+        <li data-category="biologia"><a href="#genetica">Genética Mendeliana</a></li>
+        <li data-category="biologia"><a href="#biologia-molecular">Biologia Molecular</a></li>
+        <!-- Cosmologia -->
+        <li data-category="cosmologia"><a href="#bigbang">Big Bang</a></li>
+        <li data-category="cosmologia"><a href="#materia-escura">Matéria Escura</a></li>
+        <li data-category="cosmologia"><a href="#energia-escura">Energia Escura</a></li>
       </ul>
-    </nav>
-  </header>
+      <div class="filters">
+        <button data-filter="all">Todos</button>
+        <button data-filter="fisica">Física</button>
+        <button data-filter="biologia">Biologia</button>
+        <button data-filter="cosmologia">Cosmologia</button>
+      </div>
+    </aside>
 
-  <main>
-    <section id="relatividade" class="topic">
-      <h2>Relatividade (Albert Einstein)</h2>
-      <p><strong>Princípios:</strong> Espaço e tempo são relativos; velocidade da luz é constante.</p>
-      <p><strong>Impacto:</strong> Mudou a física moderna e nossa compreensão do universo.</p>
-    </section>
+    <!-- Conteúdo principal -->
+    <main class="content">
 
-    <section id="evolucao" class="topic">
-      <h2>Teoria da Evolução (Charles Darwin)</h2>
-      <p><strong>Princípios:</strong> Seleção natural, adaptação e sobrevivência do mais apto.</p>
-      <p><strong>Impacto:</strong> Revolucionou a biologia, explicando a diversidade da vida.</p>
-    </section>
+      <!-- Relatividade -->
+      <section id="relatividade" class="topic" data-category="fisica">
+        <h2>Relatividade (Albert Einstein)</h2>
+        <div class="accordion-content">
+          <p><strong>Princípios:</strong> A teoria da relatividade geral e especial mostra que espaço e tempo são relativos, e que a velocidade da luz é constante para todos os observadores.</p>
+          <p><strong>Impacto Histórico:</strong> Transformou a física clássica, explicando fenômenos como a precessão do periélio de Mercúrio e a deflexão da luz em torno do Sol.</p>
+          <p><strong>Aplicações Modernas:</strong> GPS, engenharia aeroespacial, modelos cosmológicos.</p>
+          <p><strong>Curiosidades:</strong> Einstein publicou a teoria especial da relatividade em 1905, revolucionando a física moderna.</p>
+          <p><strong>Fontes:</strong> 
+            <a href="https://www.britannica.com/science/relativity" target="_blank">Encyclopaedia Britannica</a>, 
+            *Relativity: The Special and General Theory*, Albert Einstein.
+          </p>
+        </div>
+      </section>
 
-    <section id="caos" class="topic">
-      <h2>Teoria do Caos</h2>
-      <p><strong>Princípios:</strong> Pequenas mudanças podem causar grandes efeitos; sistemas não-lineares.</p>
-      <p><strong>Impacto:</strong> Explica padrões complexos na meteorologia, economia e física.</p>
-    </section>
+      <!-- Mecânica Quântica -->
+      <section id="quantica" class="topic" data-category="fisica">
+        <h2>Mecânica Quântica</h2>
+        <div class="accordion-content">
+          <p><strong>Princípios:</strong> O comportamento de partículas subatômicas é probabilístico; dualidade onda-partícula.</p>
+          <p><strong>Impacto Histórico:</strong> Fundamentou a física moderna, explicando fenômenos como tunelamento quântico e superposição.</p>
+          <p><strong>Aplicações Modernas:</strong> Computação quântica, semicondutores, criptografia quântica.</p>
+          <p><strong>Curiosidades:</strong> Experimentos mostram que partículas podem se comportar de forma diferente quando observadas.</p>
+          <p><strong>Fontes:</strong> 
+            <a href="https://www.nature.com/subjects/quantum-physics" target="_blank">Nature - Quantum Physics</a>, 
+            *Principles of Quantum Mechanics*, P.A.M. Dirac.
+          </p>
+        </div>
+      </section>
 
-    <section id="quantica" class="topic">
-      <h2>Mecânica Quântica</h2>
-      <p><strong>Princípios:</strong> Partículas subatômicas possuem comportamento probabilístico; dualidade onda-partícula.</p>
-      <p><strong>Impacto:</strong> Base para tecnologia moderna, como semicondutores e computadores quânticos.</p>
-    </section>
+      <!-- Teoria do Caos -->
+      <section id="caos" class="topic" data-category="fisica">
+        <h2>Teoria do Caos</h2>
+        <div class="accordion-content">
+          <p><strong>Princípios:</strong> Pequenas alterações em sistemas dinâmicos podem gerar efeitos desproporcionais; sistemas não-lineares são sensíveis às condições iniciais.</p>
+          <p><strong>Impacto Histórico:</strong> Mudou a compreensão de fenômenos complexos como clima, economia e sistemas biológicos.</p>
+          <p><strong>Aplicações Modernas:</strong> Meteorologia, economia, análise de sistemas complexos.</p>
+          <p><strong>Curiosidades:</strong> “Efeito borboleta” é uma metáfora famosa para o caos.</p>
+          <p><strong>Fontes:</strong> 
+            <a href="https://www.sciencedirect.com/topics/mathematics/chaos-theory" target="_blank">ScienceDirect - Chaos Theory</a>,
+            *Chaos: Making a New Science*, James Gleick.
+          </p>
+        </div>
+      </section>
 
-    <section id="bigbang" class="topic">
-      <h2>Teoria do Big Bang</h2>
-      <p><strong>Princípios:</strong> O universo surgiu de uma explosão primordial; expansão contínua.</p>
-      <p><strong>Impacto:</strong> Transformou nossa visão cosmológica e origem do universo.</p>
-    </section>
-  </main>
+      <!-- Teoria da Evolução -->
+      <section id="evolucao" class="topic" data-category="biologia">
+        <h2>Teoria da Evolução (Charles Darwin)</h2>
+        <div class="accordion-content">
+          <p><strong>Princípios:</strong> Seleção natural, adaptação e sobrevivência do mais apto.</p>
+          <p><strong>Impacto Histórico:</strong> Revolucionou a biologia moderna, explicando a diversidade de espécies.</p>
+          <p><strong>Aplicações Modernas:</strong> Medicina evolutiva, genética, conservação ambiental.</p>
+          <p><strong>Curiosidades:</strong> Darwin estudou espécies das Ilhas Galápagos para desenvolver sua teoria.</p>
+          <p><strong>Fontes:</strong> 
+            <a href="https://www.britannica.com/science/evolution-scientific-theory" target="_blank">Encyclopaedia Britannica - Evolution</a>,
+            *On the Origin of Species*, Charles Darwin.
+          </p>
+        </div>
+      </section>
+
+      <!-- Genética Mendeliana -->
+      <section id="genetica" class="topic" data-category="biologia">
+        <h2>Genética Mendeliana</h2>
+        <div class="accordion-content">
+          <p><strong>Princípios:</strong> Herança genética segue leis de dominância, segregação e combinação independente.</p>
+          <p><strong>Impacto Histórico:</strong> Fundamento da genética moderna; explica como características são transmitidas.</p>
+          <p><strong>Aplicações Modernas:</strong> Biotecnologia, medicina genética, melhoramento de plantas.</p>
+          <p><strong>Curiosidades:</strong> Mendel usou cruzamentos de ervilhas para formular suas leis.</p>
+          <p><strong>Fontes:</strong> 
+            <a href="https://www.nature.com/subjects/genetics" target="_blank">Nature - Genetics</a>, 
+            *Experiments in Plant Hybridization*, Gregor Mendel.
+          </p>
+        </div>
+      </section>
+
+      <!-- Big Bang -->
+      <section id="bigbang" class="topic" data-category="cosmologia">
+        <h2>Big Bang</h2>
+        <div class="accordion-content">
+          <p><strong>Princípios:</strong> O universo surgiu de uma explosão primordial e está em expansão contínua.</p>
+          <p><strong>Impacto Histórico:</strong> Mudou a cosmologia moderna, explicando a origem e evolução do universo.</p>
+          <p><strong>Aplicações Modernas:</strong> Astronomia, física de partículas, modelos cosmológicos.</p>
+          <p><strong>Curiosidades:</strong> A radiação cósmica de fundo é evidência direta do Big Bang.</p>
+          <p><strong>Fontes:</strong> 
+            <a href="https://www.britannica.com/science/Big-Bang-theory" target="_blank">Encyclopaedia Britannica - Big Bang</a>, 
+            *The First Three Minutes*, Steven Weinberg.
+          </p>
+        </div>
+      </section>
+
+    </main>
+  </div>
 
   <footer>
-    <p>© 2025 Teorias Científicas Revolucionárias</p>
+    <p>© 2025 Teorias Científicas Interativas</p>
   </footer>
 
   <script src="script.js"></script>
