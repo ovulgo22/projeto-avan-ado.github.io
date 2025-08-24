@@ -1,51 +1,61 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Theo e o Labirinto das Escolhas — Interativo</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Labirinto do Caos</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="app">
-    <header>
-      <h1>Theo e o Labirinto das Escolhas</h1>
-      <p class="subtitle">Um jogo interativo inspirado em Bandersnatch — ciência, caos e escolhas para crianças (e curiosos).</p>
-    </header>
 
-    <section id="panel" class="card">
-      <div id="sceneTitle" class="scene-title"></div>
-      <div id="sceneText" class="scene-text"></div>
+<header>
+    <div class="logo">🌀 Labirinto do Caos</div>
+    <nav>
+        <ul>
+            <li><a href="#" id="homeLink">Home</a></li>
+            <li><a href="#" id="puzzleLink">Puzzles</a></li>
+            <li><a href="#" id="logsLink">Logs</a></li>
+        </ul>
+    </nav>
+</header>
+
+<aside id="sidebar">
+    <h3>Pistas Ativas</h3>
+    <ul id="cluesList">
+        <li>Nenhuma pista ativa</li>
+    </ul>
+</aside>
+
+<main id="mainContent">
+    <section id="homeSection">
+        <h1>Bem-vindo ao Labirinto do Caos</h1>
+        <p>Explore, clique e descubra padrões. Cada ação muda seu caminho. Escolhas imprevisíveis, como na Teoria do Caos.</p>
+        <button id="startBtn">Iniciar Investigação</button>
     </section>
 
-    <nav id="choices" class="choices card"></nav>
-
-    <section id="explain" class="explain card">
-      <h3>Explicação Científica (simples)</h3>
-      <div id="explainBody"></div>
+    <section id="puzzleSection" class="hidden">
+        <div class="puzzleCard" id="puzzleCard">
+            <h2>Puzzle Inicial</h2>
+            <p id="puzzleText">“O bater de asas de uma borboleta pode alterar todo o futuro.”</p>
+            <div class="choices" id="choicesContainer">
+                <button class="choice" data-path="A">Investigar laboratório</button>
+                <button class="choice" data-path="B">Seguir sombra</button>
+            </div>
+        </div>
     </section>
 
-    <section class="card small" id="controls">
-      <div id="stats">—</div>
-      <div id="progress">Escolhas: 0</div>
-      <div class="controls-row">
-        <button id="backBtn" class="muted">↶ Voltar</button>
-        <button id="saveBtn" class="muted">💾 Salvar</button>
-        <button id="loadBtn" class="muted">📂 Carregar</button>
-        <button id="exportBtn" class="muted">⤓ Exportar</button>
-        <button id="importBtn" class="muted">⤒ Importar</button>
-        <button id="restartBtn" class="danger">Recomeçar</button>
-      </div>
-      <div id="map" class="map"></div>
+    <section id="logsSection" class="hidden">
+        <h2>Logs de Ações</h2>
+        <ul id="logsList">
+            <li>Sem registros ainda.</li>
+        </ul>
     </section>
+</main>
 
-    <footer class="card small muted">
-      Dicas automáticas de evolução sempre que pedir — use variáveis, finais secretos e eventos raros para tornar o jogo mais caótico e surpreendente.
-    </footer>
-  </main>
+<footer>
+    <p>© 2025 Labirinto do Caos | Inspirado em Teoria do Caos e Bandersnatch</p>
+</footer>
 
-  <input type="file" id="importFile" style="display:none" accept="application/json"/>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
