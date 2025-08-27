@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Big Bang Cinemático - Parte 1</title>
+<style>
+  body, html { margin:0; padding:0; overflow:hidden; background:black; }
+  canvas { display:block; }
+</style>
+</head>
+<body>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.141.0/build/three.module.js';
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.141.0/examples/jsm/controls/OrbitControls.js';
+
+// --- Cena ---
+const scene = new THREE.Scene();
+
+// --- Câmera ---
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 5000);
+camera.position.z = 60;
+
+// --- Renderizador ---
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// --- Controles de câmera ---
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.enablePan = false;
+controls.minDistance = 5;
+controls.maxDistance = 500;
+
+// --- Grupos para organizar objetos ---
+const particlesGroup = new THREE.Group();
+scene.add(particlesGroup);
+
+const galaxiesGroup = new THREE.Group();
+scene.add(galaxiesGroup);
+
+const nebulasGroup = new THREE.Group();
+scene.add(nebulasGroup);
+
+const blackHolesGroup = new THREE.Group();
+scene.add(blackHolesGroup);
+
+// --- Responsividade ---
+window.addEventListener('resize',()=>{
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth,window.innerHeight);
+});
+
+console.log("Parte 1 carregada: HTML base, cena, câmera, renderizador e grupos prontos.");
+</script>
+</body>
+</html>
