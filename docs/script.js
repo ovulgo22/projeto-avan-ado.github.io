@@ -1,1 +1,0 @@
-// Script completo incluído anteriormente com canvas, sidebar, filtros, dark mode e quizzes
