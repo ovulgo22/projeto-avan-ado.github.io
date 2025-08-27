@@ -43,7 +43,7 @@ const blackHolesGroup = new THREE.Group();
 scene.add(blackHolesGroup);
 
 // --- Funções auxiliares ---
-// Criar partículas básicas
+// Criar partículas com cores e brilho
 function createParticles(num, spread, size, colors){
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(num*3);
@@ -111,7 +111,7 @@ function createGalaxy(cx, cy, cz, arms, particlesPerArm, radius){
     galaxiesGroup.add(points);
 }
 
-// Criar nebulosas
+// Criar nebulosas pulsantes
 function createNebula(cx, cy, cz, radius, colorHex){
     const geometry = new THREE.BufferGeometry();
     const positions = [];
@@ -144,7 +144,7 @@ function createNebula(cx, cy, cz, radius, colorHex){
     nebulasGroup.add(points);
 }
 
-// Criar buracos negros
+// Criar buracos negros com efeito de atração
 function createBlackHole(x, y, z, size){
     const geometry = new THREE.SphereGeometry(size,16,16);
     const material = new THREE.MeshBasicMaterial({color:0x000000});
@@ -153,43 +153,40 @@ function createBlackHole(x, y, z, size){
     blackHolesGroup.add(blackHole);
 }
 
-// --- Sequência cronológica do universo (3 minutos) ---
-// 1. Singularidade e inflação (0-20s)
+// --- Linha do tempo do universo (3 minutos) ---
+// 0-20s: Singularidade e inflação
 setTimeout(()=>{ createParticles(5000,1,0.05,['#ffffff','#ffffaa','#ffcc88']); },0);
 setTimeout(()=>{ createParticles(10000,5,0.05,['#ffffff','#ffffaa','#ffcc88']); },5000);
 
-// 2. Radiação cósmica de fundo (20-40s)
+// 20-40s: Radiação cósmica de fundo (CMB)
 setTimeout(()=>{ createParticles(5000,15,0.03,['#ff5555','#ffaa33','#ffcc77']); },20000);
 
-// 3. Formação de átomos e matéria (40-60s)
+// 40-60s: Formação de átomos
 setTimeout(()=>{ createParticles(5000,20,0.04,['#88ccff','#aaffaa']); },40000);
 
-// 4. Primeiras estrelas e supernovas (60-100s)
+// 60-100s: Primeiras estrelas e supernovas
 setTimeout(()=>{ createGalaxy(10,0,0,4,1200,5); createGalaxy(-15,5,0,3,1000,4); },60000);
 setTimeout(()=>{ createParticles(1000,3,0.08,['#ffffff','#ffff33']); },80000);
 
-// 5. Nebulosas coloridas e evolução de galáxias (100-160s)
+// 100-160s: Nebulosas coloridas e evolução de galáxias
 setTimeout(()=>{
     createNebula(0,10,0,5,0xff00ff);
     createNebula(10,-5,0,4,0x00ffff);
     createNebula(-10,-10,0,3,0xffaa00);
 },100000);
 
-// 6. Formação de buracos negros e núcleos galácticos (160-200s)
+// 160-200s: Buracos negros e núcleos galácticos
 setTimeout(()=>{
     createBlackHole(10,0,0,1);
     createBlackHole(-15,5,0,1.2);
 },160000);
 
-// 7. Expansão contínua do universo (200-180s)
-let elapsed = 0;
-
-// --- Animação contínua ---
+// --- Animação contínua com efeitos avançados ---
 function animate(){
     requestAnimationFrame(animate);
     controls.update();
 
-    // Expandir partículas simulando a expansão do universo
+    // Expansão do universo
     particlesGroup.children.forEach(points=>{
         const positions = points.geometry.attributes.position.array;
         for(let i=0;i<positions.length;i+=3){
@@ -200,14 +197,34 @@ function animate(){
         points.geometry.attributes.position.needsUpdate = true;
     });
 
-    // Rotação das galáxias
+    // Rotação diferencial das galáxias
     galaxiesGroup.children.forEach(g=>{
         g.rotation.z += 0.0005;
+        g.rotation.x += 0.0002;
     });
 
     // Pulsação das nebulosas
     nebulasGroup.children.forEach(n=>{
-        n.material.opacity = 0.3 + 0.2*Math.sin(Date.now()/2000);
+        n.material.opacity = 0.3 + 0.2*Math.sin(Date.now()/1500);
+    });
+
+    // Pequena atração das partículas em torno dos buracos negros
+    blackHolesGroup.children.forEach(bh=>{
+        particlesGroup.children.forEach(points=>{
+            const pos = points.geometry.attributes.position.array;
+            for(let i=0;i<pos.length;i+=3){
+                const dx = bh.position.x - pos[i];
+                const dy = bh.position.y - pos[i+1];
+                const dz = bh.position.z - pos[i+2];
+                const dist = Math.sqrt(dx*dx+dy*dy+dz*dz);
+                if(dist<5){
+                    pos[i] += dx/dist*0.0005;
+                    pos[i+1] += dy/dist*0.0005;
+                    pos[i+2] += dz/dist*0.0005;
+                }
+            }
+            points.geometry.attributes.position.needsUpdate = true;
+        });
     });
 
     renderer.render(scene,camera);
@@ -219,7 +236,7 @@ animate();
 window.addEventListener('resize',()=>{
     camera.aspect = window.innerWidth/window.innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(window.innerWidth,window.innerHeight);
 });
 </script>
 </body>
