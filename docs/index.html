@@ -2,141 +2,225 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Big Bang Cinemático Canvas 2D</title>
+<title>Documentário Cinemático do Big Bang</title>
 <style>
-body, html {
-  margin:0; padding:0;
-  width:100%; height:100%;
-  background:black;
-  overflow:hidden;
-}
-canvas {
-  display:block;
-}
+  body, html { margin:0; padding:0; overflow:hidden; background:black; }
+  canvas { display:block; }
 </style>
 </head>
 <body>
-<canvas id="universe"></canvas>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.141.0/build/three.module.js';
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.141.0/examples/jsm/controls/OrbitControls.js';
 
-<script>
-const canvas = document.getElementById('universe');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-const width = canvas.width;
-const height = canvas.height;
+// --- Cena, câmera e renderizador ---
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 5000);
+camera.position.z = 50;
 
-const particles = [];
-const galaxies = [];
-const nebulas = [];
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
-class Particle {
-  constructor(x, y, vx, vy, size, color, glow=false){
-    this.x = x;
-    this.y = y;
-    this.vx = vx;
-    this.vy = vy;
-    this.size = size;
-    this.color = color;
-    this.glow = glow;
-  }
-  update(){
-    this.x += this.vx;
-    this.y += this.vy;
-  }
-  draw(){
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
-    if(this.glow){
-      ctx.shadowColor = this.color;
-      ctx.shadowBlur = this.size*4;
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.enablePan = false;
+controls.minDistance = 5;
+controls.maxDistance = 500;
+
+// --- Grupos de objetos ---
+const particlesGroup = new THREE.Group();
+scene.add(particlesGroup);
+
+const galaxiesGroup = new THREE.Group();
+scene.add(galaxiesGroup);
+
+const nebulasGroup = new THREE.Group();
+scene.add(nebulasGroup);
+
+const blackHolesGroup = new THREE.Group();
+scene.add(blackHolesGroup);
+
+// --- Funções auxiliares ---
+// Criar partículas básicas
+function createParticles(num, spread, size, colors){
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(num*3);
+    const particleColors = new Float32Array(num*3);
+    const color = new THREE.Color();
+
+    for(let i=0;i<num;i++){
+        positions[i*3] = (Math.random()-0.5)*spread;
+        positions[i*3+1] = (Math.random()-0.5)*spread;
+        positions[i*3+2] = (Math.random()-0.5)*spread;
+
+        color.set(colors[Math.floor(Math.random()*colors.length)]);
+        particleColors[i*3] = color.r;
+        particleColors[i*3+1] = color.g;
+        particleColors[i*3+2] = color.b;
     }
-    ctx.fillStyle = this.color;
-    ctx.fill();
-    ctx.shadowBlur = 0;
-  }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions,3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(particleColors,3));
+
+    const material = new THREE.PointsMaterial({
+        size: size,
+        vertexColors: true,
+        blending: THREE.AdditiveBlending,
+        transparent: true,
+        depthWrite:false
+    });
+
+    const points = new THREE.Points(geometry, material);
+    particlesGroup.add(points);
 }
 
-// Função para criar partículas iniciais do Big Bang
-function createInitialParticles(num){
-  for(let i=0;i<num;i++){
-    const angle = Math.random()*Math.PI*2;
-    const speed = Math.random()*3+1;
-    const vx = Math.cos(angle)*speed;
-    const vy = Math.sin(angle)*speed;
-    const size = Math.random()*2+1;
-    const color = ['white','yellow','orange'][Math.floor(Math.random()*3)];
-    particles.push(new Particle(width/2, height/2, vx, vy, size, color, true));
-  }
-}
+// Criar galáxias espirais
+function createGalaxy(cx, cy, cz, arms, particlesPerArm, radius){
+    const geometry = new THREE.BufferGeometry();
+    const positions = [];
+    const colors = [];
+    const color = new THREE.Color();
 
-// Função para criar galáxias
-function createGalaxy(cx, cy, arms, particlesPerArm, radius){
-  for(let i=0;i<arms;i++){
-    for(let j=0;j<particlesPerArm;j++){
-      const angle = (j/particlesPerArm)*Math.PI*2 + (i*2*Math.PI/arms);
-      const r = (j/particlesPerArm)*radius;
-      const x = cx + r*Math.cos(angle);
-      const y = cy + r*Math.sin(angle);
-      const color = `hsl(${Math.random()*360},80%,70%)`;
-      const p = new Particle(x, y, 0, 0, 2, color, true);
-      particles.push(p);
+    for(let i=0;i<arms;i++){
+        for(let j=0;j<particlesPerArm;j++){
+            const angle = (j/particlesPerArm)*Math.PI*2 + (i*2*Math.PI/arms);
+            const r = (j/particlesPerArm)*radius;
+            const x = cx + r*Math.cos(angle);
+            const y = cy + r*Math.sin(angle);
+            const z = cz + (Math.random()-0.5)*0.5;
+
+            positions.push(x,y,z);
+            color.setHSL(Math.random(),1.0,0.5);
+            colors.push(color.r,color.g,color.b);
+        }
     }
-  }
+
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions,3));
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors,3));
+
+    const material = new THREE.PointsMaterial({
+        size:0.05,
+        vertexColors:true,
+        blending:THREE.AdditiveBlending,
+        depthWrite:false
+    });
+
+    const points = new THREE.Points(geometry, material);
+    galaxiesGroup.add(points);
 }
 
-// Função para criar nebulosas
-function createNebula(cx, cy, radius, color){
-  nebulas.push({cx, cy, radius, color, phase:Math.random()*Math.PI*2});
+// Criar nebulosas
+function createNebula(cx, cy, cz, radius, colorHex){
+    const geometry = new THREE.BufferGeometry();
+    const positions = [];
+    const colors = [];
+    const color = new THREE.Color(colorHex);
+
+    for(let i=0;i<2000;i++){
+        const angle = Math.random()*Math.PI*2;
+        const r = Math.random()*radius;
+        const x = cx + r*Math.cos(angle);
+        const y = cy + r*Math.sin(angle);
+        const z = cz + (Math.random()-0.5)*radius/2;
+
+        positions.push(x,y,z);
+        colors.push(color.r,color.g,color.b);
+    }
+
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions,3));
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors,3));
+
+    const material = new THREE.PointsMaterial({
+        size:0.1,
+        vertexColors:true,
+        blending:THREE.AdditiveBlending,
+        transparent:true,
+        depthWrite:false
+    });
+
+    const points = new THREE.Points(geometry, material);
+    nebulasGroup.add(points);
 }
 
-// Função para animar nebulosas
-function drawNebulas(){
-  nebulas.forEach(n=>{
-    const grd = ctx.createRadialGradient(n.cx,n.cy,0,n.cx,n.cy,n.radius);
-    grd.addColorStop(0, n.color);
-    grd.addColorStop(1, 'transparent');
-    ctx.fillStyle = grd;
-    ctx.globalAlpha = 0.5 + 0.5*Math.sin(Date.now()/3000 + n.phase);
-    ctx.beginPath();
-    ctx.arc(n.cx,n.cy,n.radius,0,Math.PI*2);
-    ctx.fill();
-    ctx.globalAlpha = 1;
-  });
+// Criar buracos negros
+function createBlackHole(x, y, z, size){
+    const geometry = new THREE.SphereGeometry(size,16,16);
+    const material = new THREE.MeshBasicMaterial({color:0x000000});
+    const blackHole = new THREE.Mesh(geometry,material);
+    blackHole.position.set(x,y,z);
+    blackHolesGroup.add(blackHole);
 }
 
-// Função principal de animação
+// --- Sequência cronológica do universo (3 minutos) ---
+// 1. Singularidade e inflação (0-20s)
+setTimeout(()=>{ createParticles(5000,1,0.05,['#ffffff','#ffffaa','#ffcc88']); },0);
+setTimeout(()=>{ createParticles(10000,5,0.05,['#ffffff','#ffffaa','#ffcc88']); },5000);
+
+// 2. Radiação cósmica de fundo (20-40s)
+setTimeout(()=>{ createParticles(5000,15,0.03,['#ff5555','#ffaa33','#ffcc77']); },20000);
+
+// 3. Formação de átomos e matéria (40-60s)
+setTimeout(()=>{ createParticles(5000,20,0.04,['#88ccff','#aaffaa']); },40000);
+
+// 4. Primeiras estrelas e supernovas (60-100s)
+setTimeout(()=>{ createGalaxy(10,0,0,4,1200,5); createGalaxy(-15,5,0,3,1000,4); },60000);
+setTimeout(()=>{ createParticles(1000,3,0.08,['#ffffff','#ffff33']); },80000);
+
+// 5. Nebulosas coloridas e evolução de galáxias (100-160s)
+setTimeout(()=>{
+    createNebula(0,10,0,5,0xff00ff);
+    createNebula(10,-5,0,4,0x00ffff);
+    createNebula(-10,-10,0,3,0xffaa00);
+},100000);
+
+// 6. Formação de buracos negros e núcleos galácticos (160-200s)
+setTimeout(()=>{
+    createBlackHole(10,0,0,1);
+    createBlackHole(-15,5,0,1.2);
+},160000);
+
+// 7. Expansão contínua do universo (200-180s)
+let elapsed = 0;
+
+// --- Animação contínua ---
 function animate(){
-  ctx.clearRect(0,0,width,height);
-  drawNebulas();
-  particles.forEach(p=>{
-    p.update();
-    p.draw();
-  });
-  requestAnimationFrame(animate);
-}
+    requestAnimationFrame(animate);
+    controls.update();
 
-// Inicialização do universo
-createInitialParticles(500); // partículas do Big Bang
-setTimeout(()=>{ createInitialParticles(1000); },3000); // inflação rápida
-setTimeout(()=>{ createGalaxy(width*0.3,height*0.4,3,80,180); createGalaxy(width*0.7,height*0.6,4,100,230); },8000);
-setTimeout(()=>{ createNebula(width*0.5,height*0.3,150,'rgba(255,0,150,0.3)');
-                  createNebula(width*0.6,height*0.6,180,'rgba(0,200,255,0.3)');
-                  createNebula(width*0.3,height*0.5,130,'rgba(0,255,100,0.3)');
-                  createNebula(width*0.4,height*0.7,160,'rgba(255,100,50,0.3)'); },12000);
+    // Expandir partículas simulando a expansão do universo
+    particlesGroup.children.forEach(points=>{
+        const positions = points.geometry.attributes.position.array;
+        for(let i=0;i<positions.length;i+=3){
+            positions[i] *= 1.0005;
+            positions[i+1] *= 1.0005;
+            positions[i+2] *= 1.0005;
+        }
+        points.geometry.attributes.position.needsUpdate = true;
+    });
 
-// Zoom e pan cinematográficos
-let scale = 1, offsetX = 0, offsetY = 0;
-function animateZoom(){
-  scale += 0.0005;
-  offsetX -= 0.1;
-  offsetY -= 0.05;
-  ctx.setTransform(scale,0,0,scale,offsetX,offsetY);
-  requestAnimationFrame(animateZoom);
+    // Rotação das galáxias
+    galaxiesGroup.children.forEach(g=>{
+        g.rotation.z += 0.0005;
+    });
+
+    // Pulsação das nebulosas
+    nebulasGroup.children.forEach(n=>{
+        n.material.opacity = 0.3 + 0.2*Math.sin(Date.now()/2000);
+    });
+
+    renderer.render(scene,camera);
 }
 
 animate();
-animateZoom();
+
+// --- Responsividade ---
+window.addEventListener('resize',()=>{
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
 </script>
 </body>
 </html>
