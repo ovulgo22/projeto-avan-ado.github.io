@@ -2,184 +2,94 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Curta em 2D</title>
+<title>Big Bang Animação</title>
 <style>
   body, html {
     margin: 0;
     padding: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background: black;
+  }
+
+  #universe {
+    position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: black;
-    font-family: Arial, sans-serif;
-    color: white;
-    text-align: center;
-  }
-  .scene {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 2s;
-  }
-  .active {
-    opacity: 1;
   }
 
-  /* Cena 1 */
-  #scene1 .planet {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #2e86de, #1b1b3a);
+  /* Ponto inicial do Big Bang */
+  .bang {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
-    animation: rotate 10s linear infinite;
-    box-shadow: 0 0 40px #2e86de;
-  }
-  #scene1 .shooting-star {
-    width: 4px;
-    height: 100px;
+    width: 10px;
+    height: 10px;
     background: white;
-    position: absolute;
-    top: -100px;
-    left: 80%;
-    opacity: 0.8;
-    transform: rotate(45deg);
-    animation: fall 3s ease-in-out forwards;
-    animation-delay: 2s;
-  }
-  #scene1 .intro-text {
-    position: absolute;
-    width: 100%;
-    bottom: -100px;
-    font-size: 24px;
-    animation: rise 10s ease forwards;
-    animation-delay: 1s;
-  }
-
-  /* Cena 2 - Zoom planeta */
-  #scene2 .planet-zoom {
-    width: 200px;
-    height: 200px;
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #2e86de, #1b1b3a);
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) scale(1);
-    animation: zoom 5s forwards;
-  }
-  #scene2 .text2 {
-    position: absolute;
-    width: 100%;
-    bottom: 10%;
-    font-size: 28px;
-    opacity: 0;
-    animation: fadein 3s forwards;
-    animation-delay: 1s;
-  }
-
-  /* Cena 3 - Personagem */
-  #scene3 .character {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #f1c40f;
-    position: absolute;
-    left: 50%;
-    top: 60%;
     transform: translate(-50%, -50%);
-    animation: float 4s ease-in-out infinite alternate;
+    animation: explode 2s ease-out forwards;
   }
-  #scene3 .text3 {
+
+  /* Partículas do universo */
+  .particle {
     position: absolute;
-    width: 100%;
-    bottom: 10%;
-    font-size: 28px;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
     opacity: 0;
-    animation: fadein 3s forwards;
-    animation-delay: 1s;
   }
 
-  /* Cena 4 - Fade final */
-  #scene4 {
-    background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 32px;
-  }
-
-  /* Keyframes */
-  @keyframes rotate {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to { transform: translate(-50%, -50%) rotate(360deg); }
-  }
-  @keyframes fall {
-    to { top: 120%; left: -20%; opacity: 0; }
-  }
-  @keyframes rise {
-    to { bottom: 50%; opacity: 1; }
-  }
-  @keyframes zoom {
-    to { transform: translate(-50%, -50%) scale(3); }
-  }
-  @keyframes fadein {
-    to { opacity: 1; }
-  }
-  @keyframes float {
-    0% { transform: translate(-50%, -50%) translateY(0px); }
-    100% { transform: translate(-50%, -50%) translateY(-30px); }
+  /* Keyframes do Big Bang */
+  @keyframes explode {
+    0% { width: 10px; height: 10px; opacity: 1; }
+    100% { width: 200px; height: 200px; opacity: 0; }
   }
 </style>
 </head>
 <body>
-
-<!-- Cena 1 -->
-<div id="scene1" class="scene active">
-  <div class="planet"></div>
-  <div class="shooting-star"></div>
-  <div class="intro-text">"Vivemos em uma Simulação?"</div>
-</div>
-
-<!-- Cena 2 -->
-<div id="scene2" class="scene">
-  <div class="planet-zoom"></div>
-  <div class="text2">"Um segredo escondido dentro do mundo real..."</div>
-</div>
-
-<!-- Cena 3 -->
-<div id="scene3" class="scene">
-  <div class="character"></div>
-  <div class="text3">"Quem controla esta realidade?"</div>
-</div>
-
-<!-- Cena 4 -->
-<div id="scene4" class="scene">
-  "Prepare-se para descobrir..."
+<div id="universe">
+  <div class="bang"></div>
 </div>
 
 <script>
-  const scenes = document.querySelectorAll('.scene');
-  let current = 0;
+  const universe = document.getElementById('universe');
 
-  function nextScene() {
-    scenes[current].classList.remove('active');
-    current++;
-    if(current < scenes.length){
-      scenes[current].classList.add('active');
+  // Função para criar partículas
+  function createParticles(num) {
+    for(let i=0; i<num; i++){
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      universe.appendChild(p);
+
+      // Posição inicial no centro
+      p.style.left = window.innerWidth/2 + 'px';
+      p.style.top = window.innerHeight/2 + 'px';
+
+      // Animação para espalhar
+      const angle = Math.random() * 2 * Math.PI;
+      const distance = Math.random() * 800 + 200;
+      const x = Math.cos(angle) * distance;
+      const y = Math.sin(angle) * distance;
+
+      p.animate([
+        { transform: 'translate(0, 0)', opacity: 1 },
+        { transform: `translate(${x}px, ${y}px)`, opacity: 1 }
+      ], {
+        duration: 4000,
+        fill: 'forwards',
+        easing: 'ease-out'
+      });
     }
   }
 
-  // Sequência automática
-  setTimeout(nextScene, 10000); // Cena 1 -> 10s
-  setTimeout(nextScene, 16000); // Cena 2 -> 6s
-  setTimeout(nextScene, 22000); // Cena 3 -> 6s
-  // Cena 4 fica como final
+  // Delay para criar partículas após o "bang"
+  setTimeout(() => {
+    createParticles(200); // Cria 200 partículas
+  }, 2000);
 </script>
-
 </body>
 </html>
