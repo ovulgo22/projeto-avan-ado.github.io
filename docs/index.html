@@ -1,59 +1,34 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Big Bang Cinemático - Parte 1</title>
-<style>
-  body, html { margin:0; padding:0; overflow:hidden; background:black; }
-  canvas { display:block; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supercomputador Quântico Simulado</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.141.0/build/three.module.js';
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.141.0/examples/jsm/controls/OrbitControls.js';
+    <div class="container">
+        <h1>Simulação de Supercomputador Quântico</h1>
+        <p>Manipule qubits, aplique portas quânticas e veja os resultados probabilísticos!</p>
+        
+        <div class="qubits-container">
+            <div class="qubit" id="qubit0">Qubit 0: |0⟩</div>
+            <div class="qubit" id="qubit1">Qubit 1: |0⟩</div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="applyHadamard(0)">Hadamard Q0</button>
+            <button onclick="applyPauliX(0)">Pauli-X Q0</button>
+            <button onclick="applyCNOT(0,1)">CNOT Q0→Q1</button>
+            <button onclick="measureAll()">Medir Qubits</button>
+        </div>
 
-// --- Cena ---
-const scene = new THREE.Scene();
+        <div class="results">
+            <h2>Resultados</h2>
+            <pre id="resultsOutput">Nenhuma operação realizada.</pre>
+        </div>
+    </div>
 
-// --- Câmera ---
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 5000);
-camera.position.z = 60;
-
-// --- Renderizador ---
-const renderer = new THREE.WebGLRenderer({antialias:true});
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
-
-// --- Controles de câmera ---
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-controls.dampingFactor = 0.05;
-controls.enablePan = false;
-controls.minDistance = 5;
-controls.maxDistance = 500;
-
-// --- Grupos para organizar objetos ---
-const particlesGroup = new THREE.Group();
-scene.add(particlesGroup);
-
-const galaxiesGroup = new THREE.Group();
-scene.add(galaxiesGroup);
-
-const nebulasGroup = new THREE.Group();
-scene.add(nebulasGroup);
-
-const blackHolesGroup = new THREE.Group();
-scene.add(blackHolesGroup);
-
-// --- Responsividade ---
-window.addEventListener('resize',()=>{
-    camera.aspect = window.innerWidth/window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth,window.innerHeight);
-});
-
-console.log("Parte 1 carregada: HTML base, cena, câmera, renderizador e grupos prontos.");
-</script>
+    <script src="script.js"></script>
 </body>
 </html>
